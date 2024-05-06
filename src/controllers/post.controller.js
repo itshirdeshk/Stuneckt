@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/ApiErrors.js";
 import { Post } from "../models/post.model.js";
 
+// Creating Post
 const createPost = asyncHandler(async (req, res) => {
     const { title, content } = req.body;
 
@@ -19,6 +20,7 @@ const createPost = asyncHandler(async (req, res) => {
     })
 })
 
+// Get all posts made by a user
 const getAllPostOfAUser = asyncHandler(async (req, res) => {
     const userId = req.user;
     const { page = 1 } = req.query;
@@ -27,11 +29,13 @@ const getAllPostOfAUser = asyncHandler(async (req, res) => {
     const skip = (page - 1) * resultPerPage;
 
     const [posts, totalPostsCount] = await Promise.all([Post.find({ user: userId }).sort({ createdAt: -1 })
-        .skip(skip)
+        // Applying pagination
+        .skip(skip) 
         .limit(resultPerPage)
         .lean(),
     Post.countDocuments({ user: userId })]);
-
+    
+    // Counting total pages
     const totalPages = Math.ceil(totalPostsCount / resultPerPage) || 0;
 
     if (!posts) throw new ApiError(400, "No Posts found.")
@@ -43,6 +47,7 @@ const getAllPostOfAUser = asyncHandler(async (req, res) => {
     });
 })
 
+// Get all posts existing posts
 const allPosts = asyncHandler(async (req, res) => {
     const { page = 1 } = req.query;
 
@@ -50,6 +55,7 @@ const allPosts = asyncHandler(async (req, res) => {
     const skip = (page - 1) * resultPerPage;
 
     const [posts, totalPostsCount] = await Promise.all([Post.find().sort({ createdAt: -1 })
+        // Applying pagination
         .skip(skip)
         .limit(resultPerPage)
         .populate("user", "fullname username")

@@ -9,6 +9,7 @@ import { ApiError } from "../utils/ApiErrors.js";
 const newUser = asyncHandler(async (req, res) => {
     const { fullname, username, email, password, bio } = req.body;
 
+    // Checking if any of the fields are empty or not.
     if (
         [username, fullname, email, password].some(
             (field) => field?.trim() === ""
@@ -17,6 +18,7 @@ const newUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All Fields are required...");
     }
 
+    // Checking if user already exists
     const existedUser = await User.findOne({
         $or: [{ username }, { email }],
     });
@@ -40,6 +42,7 @@ const newUser = asyncHandler(async (req, res) => {
         );
     }
 
+    // Saving token in the cookies
     sendToken(res, user, 201, "User Created...");
 });
 
@@ -57,6 +60,7 @@ const login = asyncHandler(async (req, res) => {
     if (!isMatch)
         throw new ApiError(400, "Invalid Username Or Password!");
 
+    // Saving token in the cookies
     sendToken(res, user, 200, `Welcome Back, ${user.fullname}`);
 });
 
@@ -90,6 +94,7 @@ const updateUserDetails = asyncHandler(async (req, res) => {
 
 // Logout User
 const logout = asyncHandler(async (req, res) => {
+    // Removing the token from the cookies
     res.status(200)
         .cookie("stuneckt-token", "", { ...cookieOptions, maxAge: 0 })
         .json({

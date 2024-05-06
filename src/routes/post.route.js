@@ -3,6 +3,7 @@ import { allPosts, createPost, getAllPostOfAUser } from "../controllers/post.con
 
 const router = Router();
 
+// Post routes
 router.route("/createpost").post(createPost)
 router.route("/myposts").get(getAllPostOfAUser)
 router.route("/allposts").get(allPosts)

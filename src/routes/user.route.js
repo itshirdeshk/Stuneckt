@@ -4,11 +4,13 @@ import { getUserDetails, login, logout, newUser, updateUserDetails } from "../co
 
 const router = Router();
 
+// User routes
 router.route("/register").post(
     newUser
 );
 router.route("/login").post(login);
 
+// Added a "isAuthenticated" Middleware so that only a logged in user can access these routes.
 router.use(isAuthenticated)
 router.route("/getuserdetails").get(getUserDetails)
 router.route("/updateUserDetails").put(updateUserDetails)

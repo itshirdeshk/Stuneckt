@@ -1,6 +1,7 @@
 import connectDB from "./db/index.js";
 import { app } from "./app.js";
 
+// Connecting to Database
 connectDB()
     .then(() => {
         app.on("error", (error) => {

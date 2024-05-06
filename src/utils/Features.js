@@ -8,6 +8,7 @@ const cookieOptions = {
 };
 
 const sendToken = (res, user, code, message) => {
+    // Creating a token by using json web token
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
 
     res.status(code).cookie("stuneckt-token", token, cookieOptions).json({

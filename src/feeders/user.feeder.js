@@ -1,11 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { User } from "../models/user.model.js";
 
+// Mock data feeder script which feeds users to the DB
 const createUsers = async (numUsers) => {
     try {
         const usersPromise = [];
 
         for (let i = 0; i < numUsers; i++) {
+            // Creating a user
             const tempUser = User.create({
                 fullname: faker.person.fullName(),
                 username: faker.internet.userName(),

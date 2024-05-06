@@ -1,6 +1,7 @@
 import mongoose from "mongoose"; 
 import bcrypt from "bcrypt";
 
+// User Model
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -27,6 +28,7 @@ const userSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
+// Use a save pre hook so that our password doesn't hash everytime we save User.
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
 

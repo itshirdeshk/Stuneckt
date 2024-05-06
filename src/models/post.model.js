@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Post Model
 const postSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
