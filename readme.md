@@ -7,7 +7,7 @@ This is a RESTful API for a microblogging platform like Twitter or LinkedIn.
 1. Clone the repository:
 
 ```
-git clone https://github.com/itshirdeshk/stuneckt
+git clone https://github.com/itshirdeshk/stuneckt.git
 ```
 
 2. Install dependencies:
